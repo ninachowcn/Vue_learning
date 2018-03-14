@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组语法</title>
+    <script src="https://unpkg.com/vue"></script>
+
+<style>
+    .active{
+        color: deeppink;
+    }
+    .error{
+        background-color: rgb(85, 148, 211);
+    }
+</style>
+</head>
+<body>
+    <h2>绑定 HTML Class -- 数组</h2>
+    <hr>
+    <h4>1, 普通数组绑定</h4>
+    <p>基本语法：v-bind:class="[ activeClass, errorClass]"，参数为键值对名称</p>
+    <p>data : {activeClass : 'active',errorClass : 'error'}，键值为class名字</p>
+    <p>div 被渲染为 < div class="active, error" ></p>
+    <div id="vm1" v-bind:class="[ activeClass, errorClass]"> 字体颜色红色生效，背景蓝色生效</div>
+    <br>
+
+    <hr>
+    <h4>2，在数组中添加表达式</h4>
+    <p>v-bind:class="[ isActive ? activeClass:'', errorClass]"</p>
+    <div id="vm2" v-bind:class="[ isActive ? activeClass:'', errorClass]"> isActive=false时，字体颜色红色失效，否则生效，背景蓝色始终生效</div>
+    <br>
+
+    <hr>
+    <h4>3，在数组语法中用对象语法</h4>
+    
+
+<script>
+    var vm1 = new Vue({
+        el : "#vm1",
+        data : {
+            activeClass : 'active',
+            errorClass : 'error'
+        }
+    })
+
+    var vm2 = new Vue({
+        el : "#vm2",
+        data :{
+            isActive : false,
+            activeClass : 'active',
+            errorClass : 'error'
+        }
+    })
+</script>
+</body>
+</html>

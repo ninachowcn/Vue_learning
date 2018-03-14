@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绑定 HTML Class</title>
+    <script src="https://unpkg.com/vue"></script>
+<style>
+    .active{
+        color: red;
+    }
+    .norClass{
+        font-size: 20px;
+    }
+    .text-danger{
+        background-color: gold;
+    }
+
+</style>
+</head>
+<body>
+    <h2>绑定 HTML Class -- 对象</h2>
+    <p>基本语法 ：v-bind:class="{ active: isActive}" </p>
+    <hr>
+    <h4>1，绑定单个class</h4>
+    <p>传给 v-bind:class 一个对象，以动态地切换 class：< div id = "vm1" v-bind:class="{ active: isActive}" ></p>
+    <p>语法表示 active 这个 class 存在与否将取决于数据属性 isActive 的 bool值。data : {isActive : true,}</p>
+    <div id = "vm1" v-bind:class="{ active: isActive}">绑定一个class</div>
+    <br>
+
+    <hr>
+    <h4>2，绑定多个class</h4>
+    <p>在对象中传入更多属性来动态切换多个 class。此外，v-bind:class 指令也可以与普通的 class 属性共存</p>
+    <p>如下事例：普通class使字体放大，动态class1-false不能让字体颜色变红，动态class2-true使背景颜色变黄</p>
+    <p>实际结果html被渲染为< 元素 class = “普通class 动态class2” > < /元素 ></p>
+    <div id = "vm2" class="norClass" v-bind:class="{active:isActive, 'text-danger':hasError}">普通class使字体放大，动态class1-false不能让字体颜色变红，动态class2-true使背景颜色变黄</div>
+    <br>
+
+    <hr>
+    <h4>3，新建一个对象，对象包含多个class</h4>
+    <p>绑定数据对象不必内联定义在模版，可以写在一个对象里面，对象写在data:{}中</p>
+    <p>语法 ： v-bind:class=" classObject " ，没有大括号包裹</p>
+    <p>classObject:{ class1名称 : false, class2名称 : true}，对象中键值直接是class的名称，与上述两个绑定不同</p>
+    <div id="vm3" v-bind:class=" classObject ">与上一个事例中两个动态class的bool值一致</div>
+    <br>
+
+    <hr>
+    <h4>4，绑定一个返回对象的计算属性</h4>
+    <p>在计算属性computed:{}中写一个方法，方法返回一个包含多个class的对象</p>
+    <p>语法：v-bind:class=" classFuntion "</p>
+    <div id="vm4" v-bind:class=" classFuntion ">classFuntion是一个方法，方法返回一个对象{class1名称 : true, class2名称 : false}，红色字体，无背景颜色</div>
+    <br>
+    <hr>
+
+    
+<script>
+    var vm1 = new Vue({
+        el : "#vm1",
+        data : {
+            isActive : true,
+        }
+    })
+
+    var vm2 = new Vue({
+        el : "#vm2",
+        data : {
+            isActive: false,
+            hasError :true
+        }
+    })
+
+    var vm3 = new Vue({
+        el : "#vm3",
+        data : {
+            classObject:{
+                active: false,
+                'text-danger' :true
+            }
+        }
+    })
+
+    var vm4 = new Vue({
+        el : "#vm4",
+        data : {
+            isActive : true,
+            error : null    
+        },
+        computed : {
+            classFuntion : function(){
+                return {
+                    active : this.isActive && !this.error,
+                    'text-danger' : this.error && this.error.type === 'false'
+                }
+            }
+        }
+
+    })
+</script>
+
+</body>
+</html>

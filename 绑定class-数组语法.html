@@ -34,7 +34,8 @@
 
     <hr>
     <h4>3，在数组语法中用对象语法</h4>
-    
+    <p>v-bind:class="[{ active:isActive }, bgcClass]</p>
+    <div id="vm3" v-bind:class="[{ active:isActive }, bgcClass]">字体颜色红色生效，背景蓝色始终生效</div>    
 
 <script>
     var vm1 = new Vue({
@@ -53,6 +54,15 @@
             errorClass : 'error'
         }
     })
+
+    var vm3 = new Vue({
+        el : "#vm3",
+        data : {
+            isActive : true,
+            bgcClass : 'error'
+        }
+    })
+    
 </script>
 </body>
 </html>

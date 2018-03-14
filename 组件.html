@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <h2>组件的定义</h2>
+    <p>组件 (Component) 是 Vue.js 最强大的功能之一。</p>
+    <p>组件可以扩展 HTML 元素，封装可重用的代码。</p>
+    <p>在较高层面上，组件是自定义元素，Vue.js 的编译器为它添加特殊功能。</p>
+    <p>在有些情况下，组件也可以表现为用 is 特性进行了扩展的原生 HTML 元素。</p>
+    <p>所有的 Vue 组件同时也都是 Vue 的实例，所以可接受相同的选项对象 (除了一些根级特有的选项) 并提供相同的生命周期钩子。</p>
+    <h3>全局注册组件</h3>
+    <p>组件在注册之后，便可以作为自定义元素 < my-component>< /my-component> 在一个实例的模板中使用。注意确保在初始化根实例之前注册组件：</p>
+    <div id="vm1">
+        <my-component1></my-component1>
+    </div>
+    <hr>
+    <h3>局部注册组件</h3>
+    <p>不必把每个组件都注册到全局。你可以通过某个 Vue 实例/组件的实例选项 components 注册仅在其作用域中可用的组件：</p>
+    <p>var Child = {
+            template : '< p ...'
+        }</p>
+    <p>components :{
+            'my-component2' : Child
+        }</p>
+    <div id="vm2">
+        <my-component2></my-component2>
+    </div>
+    <br>
+    <hr>
+    <h3>DOM 模板解析注意事项</h3>
+    <p>当使用 DOM 作为模板时 (例如，使用 el 选项来把 Vue 实例挂载到一个已有内容的元素上)，你会受到 HTML 本身的一些限制，因为 Vue 只有在浏览器解析、规范化模板之后才能获取其内容。尤其要注意，像 < ul>、< ol>、< table>、< select> 这样的元素里允许包含的元素有限制，而另一些像 < option> 这样的元素只能出现在某些特定元素的内部。</p>
+    <a href="https://cn.vuejs.org/v2/guide/components.html#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%84%E4%BB%B6%EF%BC%9F">详细解释</a>
+    <br>
+    <hr>
+    <h3>data 必须是函数</h3>
+    <p>构造 Vue 实例时传入的各种选项大多数都可以在组件里使用。只有一个例外：data 必须是函数。</p>
+    <p>由于这三个组件实例共享了同一个 data 对象，因此递增一个 counter 会影响所有组件</p>
+    <div id="vm4">点击一个按钮，所有按钮数值累加
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+    </div>
+    <div id="vm5">点击一个按钮，单个按钮数值累加
+        <simple-counter2></simple-counter2>
+        <simple-counter2></simple-counter2>
+        <simple-counter2></simple-counter2>
+    </div>
+    <a href="https://cn.vuejs.org/v2/guide/components.html#data-%E5%BF%85%E9%A1%BB%E6%98%AF%E5%87%BD%E6%95%B0">详细描述</a>
+    <br>
+    <hr>
+    <h3>组件组合</h3>
+    <p>组件设计初衷就是要配合使用的，最常见的就是形成父子组件的关系：组件 A 在它的模板中使用了组件 B。</p>
+    <p>它们之间必然需要相互通信：父组件可能要给子组件下发数据，子组件则可能要将它内部发生的事情告知父组件。</p>
+    <p>然而，通过一个良好定义的接口来尽可能将父子组件解耦也是很重要的。</p>
+    <p>这保证了每个组件的代码可以在相对隔离的环境中书写和理解，从而提高了其可维护性和复用性。</p>
+    在 Vue 中，父子组件的关系可以总结为<strong>prop 向下传递，事件向上传递</strong> 。父组件通过 prop 给子组件下发数据，子组件通过事件给父组件发送消息。
+    <br>
+    <hr>
+<script>
+    Vue.component('my-component1',{
+        template : '<p style="color:red">这是全局注册组件 my-component1</p>'
+    })
+    new Vue({
+        el : "#vm1",
+    })
+
+    var Child = {
+        template : '<p style="color:red">这是局部注册组件 Child</p>'
+    }
+    new Vue({
+        el : "#vm2",
+        components :{
+            'my-component2' : Child
+        }
+    })
+
+    var data ={ counter : 0}
+    var sCounter1 = {
+       template : '<button v-on:click="counter += 1"> {{ counter}} </button>"',
+       data : function(){
+           return data
+       }
+    }
+    new Vue({
+        el : "#vm4",
+        components :{
+            'simple-counter' : sCounter1
+        }
+    })
+
+    var sCounter2 = {
+       template : '<button v-on:click="counter += 1"> {{ counter}} </button>"',
+       data : function(){
+           return {
+               counter : 0
+           }
+       }
+    }
+    new Vue({
+        el : "#vm5",
+        components :{
+            'simple-counter2' : sCounter2
+        }
+    })
+</script>
+</body>
+</html>
+
+

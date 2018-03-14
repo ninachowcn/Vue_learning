@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>内联样式class绑定</title>
+    <script src="https://unpkg.com/vue"></script>
+
+<style>
+    .active{
+        color: #c713eb;
+    }
+    .bgc{
+        background-color: #eb710e;
+    }
+</style>
+</head>
+<body>
+    <h2>绑定 HTML Class -- 绑定内联样式</h2>
+    <h4>对象语法</h4>
+    <p>v-bind:style 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。CSS 属性名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用单引号括起来) 来命名.</p>
+    <p>v-bind:style="{color : mycolor, fontSize : fontSize + 'px'}"</p>
+    <p>data : {mycolor : "blue",fontSize : 30}</p>
+    <div id="vm1" v-bind:style="{color : mycolor, fontSize : fontSize + 'px'}">颜色蓝色，字号30</div>
+    <p>直接绑定样式对象</p>
+    <p>v-bind:style="styleObject"</p>
+    <p>data : {
+            styleObject:{
+                color : 'green',
+                fontSize : '13px'
+            }
+        }</p>
+    <div id="vm2" v-bind:style="styleObject">颜色绿色，字号13</div>
+    <br>
+    <hr>
+    <h4>数组语法</h4>
+    <p>v-bind:style 的数组语法可以将多个样式对象应用到同一个元素上：</p>
+    <div id="vm3" v-bind:style="[colorClass, bgcClass]"></div>
+    <h4>自动添加前缀</h4>
+    <p>当 v-bind:style 使用需要添加浏览器引擎前缀的 CSS 属性时，如 transform，Vue.js 会自动侦测并添加相应的前缀。</p>
+    <h4>多重值</h4>
+    <p> 2.3.0 起你可以为 style 绑定中的属性提供一个包含多个值的数组，常用于提供多个带前缀的值，例如：</p>
+    <p>:style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"</p>
+    <p>这样写只会渲染数组中最后一个被浏览器支持的值。在本例中，如果浏览器支持不带浏览器前缀的 flexbox，那么就只会渲染 display: flex。</p>
+
+ 
+
+<script>
+   var vm1 = new Vue({
+       el : "#vm1",
+       data : {
+           mycolor : "blue",
+           fontSize : 30
+       }
+   })
+
+   var vm2 = new Vue({
+       el : "#vm2",
+       data : {
+           styleObject:{
+               color : 'green',
+               fontSize : '13px'
+           }
+       }
+   })
+
+   var vm3 = new Vue({
+       el : "#vm3",
+       data : {
+        colorClass : "color: #c713eb;",
+        bgcClass : "background-color: #eb710e"
+       }
+   })
+</script>
+</body>
+</html>

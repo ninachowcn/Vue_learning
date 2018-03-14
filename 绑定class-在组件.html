@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件绑定class</title>
+    <script src="https://unpkg.com/vue"></script>
+
+<style>
+    .active{
+        color: deeppink;
+    }
+    .error{
+        background-color: rgb(85, 148, 211);
+    }
+</style>
+</head>
+<body>
+    <h2>绑定 HTML Class -- 组件</h2>
+    <p>当在一个自定义组件上使用 class 属性时，这些类将被添加到该组件的根元素上面。这个元素上已经存在的类不会被覆盖。</p>
+    <hr>
+    <p>my-component class="active" 字体颜色红色</p>
+    <p>template:'< p class="error">p标签中添加背景颜色蓝色< /p>'</p>
+    <p>两个class不会相互覆盖</p>
+    <div id="vm1">
+        <my-component class="active"></my-component>
+    </div>
+    <br>
+    <hr>
+    <p>带绑定class的用法</p>
+    <p>my-component2 v-bind:class="{active: isActive}", data中 isActive : true</p>
+    <p>template:'< p class="error">p标签中添加背景颜色蓝色22222< /p>'</p>
+    <div id="vm2">
+        <my-component2 v-bind:class="{active: isActive}"></my-component2>
+    </div>
+
+
+<script>
+   Vue.component('my-component',{
+        props :['todo'],
+        template:'<p class="error">p标签中添加背景颜色蓝色</p>'
+   })
+   var vm1 = new Vue({
+       el:"#vm1",
+   })
+    Vue.component('my-component2',{
+        template:'<p class="error">p标签中添加背景颜色蓝色22222</p>'
+    })
+    var vm2 = new Vue({
+       el:"#vm2",
+       data:{
+           isActive : true
+       }
+   })
+</script>
+</body>
+</html>
